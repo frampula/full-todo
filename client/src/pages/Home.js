@@ -1,12 +1,31 @@
-import React, { useState } from 'react';
-import SignIn from '../components/SignIn';
-import SignUp from '../components/SignUp';
+import React, { useState, useEffect } from 'react';
+import SignIn from '../components/SignIn/SignIn';
+import SignUp from '../components/SignUp/SignUp';
+import { registerUser } from '../api';
 
 const Home = () => {
   const [state, setState] = useState(true); // true -> SignUp ; false -> SignIn
+  const [data, setData] = useState();
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if(data) {
+      registerUser(data)
+      .then(result => {
+        console.log(result);
+      })
+      .catch(err => {
+        setError(err);
+      });
+    }
+  }, [data]);
 
   const buttonHandler = () => {
     setState(state => !state);
+  }
+
+  const getData = (userData) => {
+    setData(userData);
   }
 
   return (
@@ -16,8 +35,10 @@ const Home = () => {
       </header>
 
       <main>
-        {state ? <SignUp /> : <SignIn /> }
+        {state ? <SignUp sendData={getData} /> : <SignIn sendData={getData} /> }
       </main>
+
+      {error && <div>{error}</div>}
     </>
   );
 }
