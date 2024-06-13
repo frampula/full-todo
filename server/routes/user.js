@@ -1,5 +1,6 @@
 const Router = require('express');
 const UserController = require('../controllers/user.controller');
+const { hashPass } = require('../middlewares/hashPassword')
 
 const userRouter = Router();
 
