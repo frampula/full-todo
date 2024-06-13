@@ -1,3 +1,3 @@
 module.exports = {
-  DB: 'mongodb://localhost:27017/fe-todo'
+  DB: 'mongodb://127.0.0.1:27017/fe-todo'
 }
